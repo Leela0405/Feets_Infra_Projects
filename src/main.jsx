@@ -9,9 +9,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<AboutUsPage />} />
-        <Route path="home" element={<ConstructionHomepage />} />
-        <Route path="/about" element={<AboutUsPage />} />
+        <Route path="/" element={<ConstructionHomepage />} />
+        <Route path="https://feet-infra-projects.vercel.app//home" element={<ConstructionHomepage />} />
+        <Route path="https://feet-infra-projects.vercel.app//about" element={<AboutUsPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
