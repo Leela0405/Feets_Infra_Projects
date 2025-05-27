@@ -10,8 +10,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<ConstructionHomepage />} />
-        <Route path="https://feet-infra-projects.vercel.app//home" element={<ConstructionHomepage />} />
-        <Route path="https://feet-infra-projects.vercel.app//about" element={<AboutUsPage />} />
+        <Route path="/home" element={<ConstructionHomepage />} />
+        <Route path="/about" element={<AboutUsPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
