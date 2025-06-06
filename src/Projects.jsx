@@ -204,8 +204,8 @@ const ProjectsPage = () => {
         <div className="w-full px-6 py-4">
           <div className="flex justify-between items-center max-w-7xl mx-auto">
             <div className="text-3xl font-bold tracking-wider cursor-pointer">
-              <span className="text-white">BUILD</span>
-              <span className="text-orange-500">CRAFT</span>
+              <span className="text-white">Feet Infra</span>
+              <span className="text-orange-500">Projects</span>
             </div>
             <div className="hidden md:flex space-x-8">
               {['Home', 'About', 'Projects', 'Contact'].map((item, index) => (
