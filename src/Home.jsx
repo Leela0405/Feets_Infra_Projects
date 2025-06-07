@@ -232,11 +232,13 @@ const ConstructionHomepage = () => {
 
               {/* Call-to-action (CTA) Buttons - removed hover:scale-105 */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in" style={{ animationDelay: '1.6s' }}>
-                <button className="group relative px-6 py-3 bg-orange-500 text-white rounded-full font-semibold text-sm sm:text-base overflow-hidden transition-all duration-300 hover:bg-orange-600 hover:shadow-2xl hover:shadow-orange-500/25">
+                <a
+                href='/contact'
+                className="group relative px-6 py-3 bg-orange-500 text-white rounded-full font-semibold text-sm sm:text-base overflow-hidden transition-all duration-300 hover:bg-orange-600 hover:shadow-2xl hover:shadow-orange-500/25">
                   <span className="relative z-10">Get Free Quote</span>
                   {/* Hover effect for button */}
                   <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-red-600 translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
-                </button>
+                </a>
                 
                 <a 
                   href="/projects" 
