@@ -465,14 +465,16 @@ const ProjectsPage = () => {
             From concept to completion, we bring your vision to life with precision and excellence.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <button className="group relative px-8 py-4 bg-orange-500 text-white rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:bg-orange-600 hover:scale-105">
+            <a
+              href='/contact'
+              className="group relative px-8 py-4 bg-orange-500 text-white rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:bg-orange-600 hover:scale-105">
               <span className="relative z-10">Get Free Quote</span>
               <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             </button>
             <button className="group relative px-8 py-4 border-2 border-orange-500 text-orange-500 rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:text-white hover:scale-105">
               <span className="relative z-10">Download Portfolio</span>
               <div className="absolute inset-0 bg-orange-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-            </button>
+            </a>
           </div>
         </div>
       </section>
