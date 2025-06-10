@@ -72,9 +72,26 @@ const ContactPage = () => {
     
     setIsSubmitting(true);
     
-    // Simulate API call
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      console.log('Submitting form data:', formData);
+      
+      const response = await fetch('http://localhost:3000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      console.log('Response status:', response.status);
+      
+      const data = await response.json();
+      console.log('Response data:', data);
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to submit form');
+      }
+
       setSubmitSuccess(true);
       setFormData({
         name: '',
@@ -87,9 +104,22 @@ const ContactPage = () => {
         timeline: ''
       });
       
+      // Show success message for 5 seconds
       setTimeout(() => setSubmitSuccess(false), 5000);
+      
     } catch (error) {
       console.error('Form submission error:', error);
+      
+      // Show error message to user
+      setFormErrors({
+        submit: error.message || 'Failed to submit form. Please try again.'
+      });
+      
+      // Clear error after 5 seconds
+      setTimeout(() => {
+        setFormErrors(prev => ({ ...prev, submit: '' }));
+      }, 5000);
+      
     } finally {
       setIsSubmitting(false);
     }
@@ -233,10 +263,14 @@ const ContactPage = () => {
       <nav className="fixed top-0 w-full z-50 bg-black bg-opacity-95 backdrop-blur-lg border-b border-gray-800/50">
         <div className="w-full px-6 py-4">
           <div className="flex justify-between items-center max-w-7xl mx-auto">
+          <a
+             href='/home'
+            >
             <div className="text-3xl font-bold tracking-wider cursor-pointer">
               <span className="text-white">FEET</span>
               <span className="text-orange-500"> INFRA</span>
             </div>
+            </a>
             <div className="hidden md:flex space-x-8">
               {['Home', 'About', 'Projects', 'Contact'].map((item, index) => (
                 <a
@@ -328,7 +362,13 @@ const ContactPage = () => {
                   </div>
                 )}
 
-                <div className="space-y-6">
+                {formErrors.submit && (
+                  <div className="mb-6 p-4 bg-red-500 bg-opacity-20 border border-red-500 rounded-lg text-red-400 text-center">
+                    ❌ {formErrors.submit}
+                  </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
                         <label className="block text-sm font-medium mb-2 text-gray-300">
@@ -482,7 +522,7 @@ const ContactPage = () => {
                         'Send Message'
                       )}
                     </button>
-                  </div>
+                  </form>
                 </div>
             </div>
 
@@ -571,6 +611,12 @@ const ContactPage = () => {
             © 2024 FEET INFRA. All rights reserved.
           </div>
         </div>
+        <a
+          href='/admin'
+           className="group relative px-1 py-2 bg-orange-500 text-white rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:bg-orange-600 hover:scale-105">
+              <span className="relative z-10">Admin</span>
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+            </a>
       </footer>
     </div>
   );

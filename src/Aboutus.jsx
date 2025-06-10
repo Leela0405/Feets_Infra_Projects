@@ -170,10 +170,14 @@ const AboutUsPage = () => {
       <nav className="fixed top-0 w-full z-50 bg-black bg-opacity-95 backdrop-blur-lg border-b border-gray-800/50">
         <div className="w-full px-6 py-4">
           <div className="flex justify-between items-center max-w-7xl mx-auto">
+          <a
+             href='/home'
+            >
             <div className="text-3xl font-bold tracking-wider cursor-pointer">
               <span className="text-white">FEET INFRA</span>
               <span className="text-orange-500">CRAFT</span>
             </div>
+            </a>
             <div className="hidden md:flex space-x-8">
               {['Home', 'About', 'Projects', 'Contact'].map((item, index) => (
                 <a

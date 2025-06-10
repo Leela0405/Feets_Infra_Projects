@@ -5,6 +5,7 @@ import ConstructionHomepage from './Home.jsx';
 import AboutUsPage from './Aboutus.jsx';
 import ProjectsPage from './Projects.jsx';
 import ContactPage from './contact.jsx';
+import AdminDashboard from './admin.jsx';
 
 
 import './index.css';
@@ -18,6 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/about" element={<AboutUsPage />} />
         <Route path="/projects" element={<ProjectsPage/>} />
         <Route path="/contact" element={<ContactPage/>} />
+        <Route path="/admin" element={<AdminDashboard/>} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
