@@ -7,7 +7,7 @@ A collection of infrastructure automation and web projects centered around the �
 
 ```
 .
-├── frontend/           # Web UI (likely using React/Vue/etc.)
+├── frontend/           # Web UI (using React)
 ├── backend/            # API / server logic (Node.js / Express / etc.)
 └── .vite/              # Build artifacts (auto-generated)
 ```
@@ -29,10 +29,10 @@ cd FeetInfraProjects
 
 ```bash
 cd frontend
-npm install        # or yarn
+npm install       
 
 cd ../backend
-npm install        # or yarn
+npm install        
 ```
 
 ### Running Locally
