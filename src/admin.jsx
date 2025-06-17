@@ -22,16 +22,21 @@ const AdminDashboard = () => {
   // Get token from localStorage
   const getToken = () => localStorage.getItem('adminToken');
 
-  // API call helper
-  const apiCall = async (endpoint, options = {}) => {
+  // API call helper - Fixed to handle authentication properly
+  const apiCall = async (endpoint, options = {}, requireAuth = true) => {
     const token = getToken();
+    
     const config = {
       headers: {
         'Content-Type': 'application/json',
-        ...(token && { Authorization: `Bearer ${token}` }),
       },
       ...options,
     };
+
+    // Only add Authorization header if we have a token AND the endpoint requires auth
+    if (requireAuth && token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
 
     const response = await fetch(`${API_BASE}${endpoint}`, config);
     const data = await response.json();
@@ -43,27 +48,32 @@ const AdminDashboard = () => {
     return data;
   };
 
-  // Login function
+  // Login function - Fixed to not require auth
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoggingIn(true);
     setLoginError('');
 
+
     try {
-      const response = await apiCall('/admin/login', {
+      const response = await apiCall('/auth/login', {
         method: 'POST',
         body: JSON.stringify(loginData),
-      });
-
+      }, false);
+    
+    
       localStorage.setItem('adminToken', response.token);
       localStorage.setItem('adminUser', JSON.stringify(response.admin));
       setIsLoggedIn(true);
       fetchDashboardData();
+    
     } catch (error) {
       setLoginError(error.message);
-    } finally {
+    }
+    finally {
       setIsLoggingIn(false);
     }
+    console.log('Token:', response.token);
   };
 
   // Logout function
@@ -89,6 +99,10 @@ const AdminDashboard = () => {
       setStats(statsData);
     } catch (error) {
       console.error('Failed to fetch data:', error);
+      // If unauthorized, logout user
+      if (error.message.includes('unauthorized') || error.message.includes('token')) {
+        handleLogout();
+      }
     } finally {
       setLoading(false);
     }
@@ -104,6 +118,9 @@ const AdminDashboard = () => {
       fetchDashboardData();
     } catch (error) {
       console.error('Failed to update status:', error);
+      if (error.message.includes('unauthorized') || error.message.includes('token')) {
+        handleLogout();
+      }
     }
   };
 
@@ -117,6 +134,9 @@ const AdminDashboard = () => {
       setShowModal(false);
     } catch (error) {
       console.error('Failed to delete request:', error);
+      if (error.message.includes('unauthorized') || error.message.includes('token')) {
+        handleLogout();
+      }
     }
   };
 
@@ -128,6 +148,9 @@ const AdminDashboard = () => {
       setShowModal(true);
     } catch (error) {
       console.error('Failed to fetch request details:', error);
+      if (error.message.includes('unauthorized') || error.message.includes('token')) {
+        handleLogout();
+      }
     }
   };
 
@@ -170,25 +193,7 @@ const AdminDashboard = () => {
   // Login Form
   if (!isLoggedIn) {
     return (
-        <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
-             <style jsx global>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-        html, body {
-          margin: 0;
-          padding: 0;
-          width: 100%;
-          overflow-x: hidden;
-        }
-        #root {
-          margin: 0;
-          padding: 0;
-          width: 100%;
-        }
-      `}</style>
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
         <div className="bg-gray-800 rounded-lg p-8 w-full max-w-md">
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-white mb-2">
@@ -254,25 +259,7 @@ const AdminDashboard = () => {
 
   // Main Dashboard
   return (
-    <div className="min-h-full bg-gray-900 text-white">
-         <style jsx global>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-        html, body {
-          margin: 0;
-          padding: 0;
-          width: 100%;
-          overflow-x: hidden;
-        }
-        #root {
-          margin: 0;
-          padding: 0;
-          width: 100%;
-        }
-      `}</style>
+    <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
       <header className="bg-gray-800 border-b border-gray-700 p-4">
         <div className="flex justify-between items-center max-w-7xl mx-auto">
@@ -632,5 +619,7 @@ const AdminDashboard = () => {
     </div>
   );
 };
+
+
 
 export default AdminDashboard;
