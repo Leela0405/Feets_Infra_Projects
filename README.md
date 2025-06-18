@@ -15,7 +15,7 @@ A collection of infrastructure automation and web projects centered around the â
 ## ðŸš€ Getting Started
 
 ### Prerequisites
-- Node.js v16+ (with npm or yarn)
+- Node.js v16+ (with npm )
 - Git
 
 ### Clone & Setup
