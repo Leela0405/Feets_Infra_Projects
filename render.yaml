@@ -16,16 +16,17 @@ services:
           name: feetinfra-db
           property: connectionString
 
-  - type: static
+  - type: web
     name: feetinfra-frontend
+    env: static
     repo: https://github.com/Ani-tem/FeetInfraProjects.git
     branch: main
     rootDir: Frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: dist   # or build for CRA
+    staticPublishPath: dist  # or "build" if using CRA
     autoDeploy: true
     envVars:
-      - key: VITE_API_URL       # or REACT_APP_API_URL if CRA
+      - key: VITE_API_URL
         value: https://feetinfra-backend.onrender.com
 
 databases:
