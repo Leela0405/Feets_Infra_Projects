@@ -21,7 +21,7 @@ A collection of infrastructure automation and web projects centered around the â
 ### Clone & Setup
 
 ```bash
-git clone https://github.com/Ani-tem/FeetInfraProjects.git
+git clone https://github.com/******/FeetInfraProjects.git
 cd FeetInfraProjects
 ```
 
