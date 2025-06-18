@@ -8,25 +8,27 @@ services:
     buildCommand: npm install
     startCommand: npm run dev
     plan: starter
-    autoDeploy: true
     region: oregon
+    autoDeploy: true
     envVars:
       - key: DATABASE_URL
         fromDatabase:
           name: feetinfra-db
           property: connectionString
 
-  - type: web
+  - type: static
     name: feetinfra-frontend
-    env: static
     repo: https://github.com/Ani-tem/FeetInfraProjects.git
     branch: main
     rootDir: Frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: dist   # or "build" if using Create React App
-    plan: starter
+    staticPublishPath: dist   # or build for CRA
     autoDeploy: true
-    region: oregon
     envVars:
-      - key: VITE_API_URL       # or REACT_APP_API_URL if using CRA
+      - key: VITE_API_URL       # or REACT_APP_API_URL if CRA
         value: https://feetinfra-backend.onrender.com
+
+databases:
+  - name: feetinfra-db
+    plan: free
+    region: oregon
