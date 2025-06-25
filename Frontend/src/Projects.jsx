@@ -1,4 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import Animated from './components/AnimatedParticles';
+import Floating from './components/FloatIcon';
+import Footer from './components/footer';
+import NavigationAuto from './components/Nav';
+import Mouse from './components/Mouse';
+
 
 const ProjectsPage = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -28,32 +34,7 @@ const ProjectsPage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const Particle = ({ delay, size, x, y }) => (
-    <div
-      className="absolute rounded-full bg-orange-500 opacity-20 animate-pulse"
-      style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        left: `${x}%`,
-        top: `${y}%`,
-        animationDelay: `${delay}s`,
-        animation: `float 6s ease-in-out infinite ${delay}s`,
-      }}
-    />
-  );
 
-  const FloatingIcon = ({ icon, delay, x, y }) => (
-    <div
-      className="absolute text-4xl text-orange-500 opacity-10"
-      style={{
-        left: `${x}%`,
-        top: `${y}%`,
-        animation: `iconFloat 8s ease-in-out infinite ${delay}s`,
-      }}
-    >
-      {icon}
-    </div>
-  );
 
   const megaProject = {
     title: "Skyline Commercial Complex",
@@ -131,106 +112,18 @@ const ProjectsPage = () => {
 
   return (
     <div className="w-screen min-h-screen bg-black text-white overflow-x-hidden relative">
-      {/* CSS Animations */}
-      <style jsx>{`
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
-          50% { transform: translateY(-100px) rotate(180deg); opacity: 0.6; }
-        }
-        @keyframes iconFloat {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-30px); }
-        }
-        @keyframes slide-up {
-          from { transform: translateY(100px); opacity: 0; }
-          to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes fade-in {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes scale-in {
-          from { transform: scale(0.8); opacity: 0; }
-          to { transform: scale(1); opacity: 1; }
-        }
-        .animate-slide-up {
-          animation: slide-up 0.8s ease-out forwards;
-          opacity: 0;
-        }
-        .animate-fade-in {
-          animation: fade-in 1s ease-out forwards;
-          opacity: 0;
-        }
-        .animate-scale-in {
-          animation: scale-in 0.6s ease-out forwards;
-          opacity: 0;
-        }
-      `}</style>
 
       {/* Dynamic background with mouse follow effect */}
-      <div 
-        className="fixed inset-0 opacity-30 transition-all duration-1000 pointer-events-none"
-        style={{
-          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 107, 53, 0.1), transparent 40%)`,
-        }}
-      />
+      <Mouse/>
 
       {/* Animated particles */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(15)].map((_, i) => (
-          <Particle
-            key={i}
-            delay={i * 0.4}
-            size={Math.random() * 25 + 8}
-            x={Math.random() * 100}
-            y={Math.random() * 100}
-          />
-        ))}
-      </div>
+      <Animated/>
 
       {/* Floating construction icons */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <FloatingIcon icon="🏗️" delay={0} x={5} y={15} />
-        <FloatingIcon icon="🏢" delay={2} x={90} y={10} />
-        <FloatingIcon icon="⚒️" delay={4} x={10} y={80} />
-        <FloatingIcon icon="🏭" delay={6} x={85} y={70} />
-        <FloatingIcon icon="🔧" delay={1} x={45} y={5} />
-        <FloatingIcon icon="⛑️" delay={3} x={95} y={45} />
-        <FloatingIcon icon="🏠" delay={5} x={5} y={50} />
-      </div>
+       <Floating/>
 
-    {/* Fixed Navigation */}
-    <nav className="fixed top-0 w-full z-50 bg-black bg-opacity-95 backdrop-blur-lg border-b border-gray-800/50">
-        <div className="w-full px-6 py-4">
-          <div className="flex justify-between items-center max-w-7xl mx-auto">
-            <a
-             href='/home'
-            >
-            <div className="text-3xl font-bold tracking-wider cursor-pointer">
-              <span className="text-white">Feet Infra</span>
-              <span className="text-orange-500">Projects</span>
-            </div>
-            </a>
-            <div className="hidden md:flex space-x-8">
-              {['Home', 'About', 'Projects', 'Contact'].map((item, index) => (
-                <a
-                  key={item}
-                  href={`/${item.toLowerCase()}`}
-                  className={`relative group transition-colors duration-300 font-medium cursor-pointer ${
-                    item === 'Projects' ? 'text-orange-500' : 'text-white hover:text-orange-500'
-                  }`}
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  {item}
-                  <span className={`absolute bottom-0 left-0 h-0.5 bg-orange-500 transition-all duration-300 ${
-                    item === 'Projects' ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`} />
-                </a>
-              ))}
-            </div>
-           </div>
-         </div>
-    </nav>
+     {/* Fixed Navigation */}
+      <NavigationAuto/>
 
       {/* Hero Section */}
       <section className="relative w-full h-screen flex items-center justify-center overflow-hidden">
@@ -488,53 +381,8 @@ const ProjectsPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="relative w-full py-12 px-6 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="md:col-span-2">
-              <div className="text-3xl font-bold tracking-wider mb-4">
-                <span className="text-white">BUILD</span>
-                <span className="text-orange-500">CRAFT</span>
-              </div>
-              <p className="text-gray-400 mb-6 max-w-md">
-                Building exceptional structures with precision, innovation, and unwavering commitment to excellence since 1998.
-              </p>
-              <div className="flex space-x-4">
-                <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-500 transition-colors duration-300 cursor-pointer">
-                  <span className="text-white">f</span>
-                </div>
-                <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-500 transition-colors duration-300 cursor-pointer">
-                  <span className="text-white">t</span>
-                </div>
-                <div className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-500 transition-colors duration-300 cursor-pointer">
-                  <span className="text-white">in</span>
-                </div>
-              </div>
-            </div>
-            <div>
-              <h4 className="text-white font-semibold mb-4">Services</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li className="hover:text-orange-500 transition-colors duration-300 cursor-pointer">Commercial Construction</li>
-                <li className="hover:text-orange-500 transition-colors duration-300 cursor-pointer">Residential Building</li>
-                <li className="hover:text-orange-500 transition-colors duration-300 cursor-pointer">Renovations</li>
-                <li className="hover:text-orange-500 transition-colors duration-300 cursor-pointer">Project Management</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="text-white font-semibold mb-4">Contact</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>123 Construction Ave</li>
-                <li>Building City, BC 12345</li>
-                <li className="hover:text-orange-500 transition-colors duration-300 cursor-pointer">(555) 123-4567</li>
-                <li className="hover:text-orange-500 transition-colors duration-300 cursor-pointer">info@buildcraft.com</li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 BuildCraft Construction. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer/>
+     
     </div>
   );
 };

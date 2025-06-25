@@ -1,4 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import Navigation from './components/Nav';
+import Footer from './components/footer';
+import Floating from './components/FloatIcon';
+import Animation from './components/AnimatedParticles';
+import Mouse from './components/Mouse';
 
 const ContactPage = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -125,179 +130,20 @@ const ContactPage = () => {
     }
   };
 
-  const Particle = ({ delay, size, x, y }) => (
-    <div
-      className="absolute rounded-full bg-orange-500 opacity-20 pointer-events-none"
-      style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        left: `${x}%`,
-        top: `${y}%`,
-      }}
-    />
-  );
-
-  const FloatingIcon = ({ icon, delay, x, y }) => (
-    <div
-      className="absolute text-3xl text-orange-500 opacity-10 pointer-events-none"
-      style={{
-        left: `${x}%`,
-        top: `${y}%`,
-      }}
-    >
-      {icon}
-    </div>
-  );
-
   return (
     <div className="w-screen min-h-screen bg-black text-white overflow-x-hidden">
-      {/* Global Styles */}
-      <style jsx global>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-        html, body {
-          margin: 0;
-          padding: 0;
-          width: 100%;
-          overflow-x: hidden;
-        }
-        #root {
-          margin: 0;
-          padding: 0;
-          width: 100%;
-        }
-      `}</style>
-
-      {/* Custom Animations */}
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-
-        @keyframes slideInLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes slideInRight {
-          from {
-            opacity: 0;
-            transform: translateX(50px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.5; }
-        }
-
-        .animate-fadeInUp {
-          animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        .animate-slideInLeft {
-          animation: slideInLeft 0.8s ease-out forwards;
-        }
-
-        .animate-slideInRight {
-          animation: slideInRight 0.8s ease-out forwards;
-        }
-
-        .animate-pulse-slow {
-          animation: pulse 2s ease-in-out infinite;
-        }
-      `}</style>
-
       {/* Dynamic Mouse Following Background */}
-      <div 
-        className="fixed inset-0 opacity-20 transition-all duration-1000 pointer-events-none"
-        style={{
-          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 107, 53, 0.15), transparent 50%)`,
-        }}
-      />
+     <Mouse/>
 
       {/* Animated Particles */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {[...Array(12)].map((_, i) => (
-          <Particle
-            key={i}
-            delay={i * 0.5}
-            size={Math.random() * 15 + 8}
-            x={Math.random() * 100}
-            y={Math.random() * 100}
-          />
-        ))}
-      </div>
+     <Animation/>
 
       {/* Floating Icons */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <FloatingIcon icon="📧" delay={0} x={5} y={110} />
-        <FloatingIcon icon="📞" delay={2} x={85} y={110} />
-        <FloatingIcon icon="🏢" delay={4} x={25} y={110} />
-        <FloatingIcon icon="💼" delay={6} x={70} y={110} />
-        <FloatingIcon icon="🏗️" delay={1} x={45} y={110} />
-        <FloatingIcon icon="✉️" delay={3} x={60} y={110} />
-      </div>
+      <Floating/>
 
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-black bg-opacity-95 backdrop-blur-lg border-b border-gray-800/50">
-        <div className="w-full px-6 py-4">
-          <div className="flex justify-between items-center max-w-7xl mx-auto">
-          <a
-             href='/home'
-            >
-            <div className="text-3xl font-bold tracking-wider cursor-pointer">
-              <span className="text-white">FEET</span>
-              <span className="text-orange-500"> INFRA</span>
-            </div>
-            </a>
-            <div className="hidden md:flex space-x-8">
-              {['Home', 'About', 'Projects', 'Contact'].map((item, index) => (
-                <a
-                  key={item}
-                  href={`/${item.toLowerCase()}`}
-                  className={`relative group transition-colors duration-300 font-medium ${
-                    item === 'Contact' ? 'text-orange-500' : 'text-white hover:text-orange-500'
-                  }`}
-                  style={{ animationDelay: `${index * 0.1}s` }}
-                >
-                  {item}
-                  <span className={`absolute bottom-0 left-0 h-0.5 bg-orange-500 transition-all duration-300 ${
-                    item === 'Contact' ? 'w-full' : 'w-0 group-hover:w-full'
-                  }`} />
-                </a>
-              ))}
-            </div>
-            <div className="md:hidden">
-              <button className="text-white hover:text-orange-500 transition-colors duration-300">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation/>
+   
 
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-6">
@@ -594,30 +440,15 @@ const ContactPage = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 bg-opacity-80 py-12 px-6 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto text-center">
-          <div className="text-3xl font-bold mb-4">
-            <span className="text-white">FEET</span>
-            <span className="text-orange-500"> INFRA</span>
-          </div>
-          <p className="text-gray-400 mb-6">Building tomorrow, today.</p>
-          <div className="flex justify-center space-x-6 text-2xl">
-            <span className="hover:text-orange-500 cursor-pointer transition-colors duration-300">📱</span>
-            <span className="hover:text-orange-500 cursor-pointer transition-colors duration-300">📧</span>
-            <span className="hover:text-orange-500 cursor-pointer transition-colors duration-300">🌐</span>
-            <span className="hover:text-orange-500 cursor-pointer transition-colors duration-300">📍</span>
-          </div>
-          <div className="mt-8 pt-8 border-t border-gray-800 text-gray-500 text-sm">
-            © 2024 FEET INFRA. All rights reserved.
-          </div>
-        </div>
+
+      <Footer/>
         <a
           href='/admin'
            className="group relative px-1 py-2 bg-orange-500 text-white rounded-full font-semibold text-lg overflow-hidden transition-all duration-300 hover:bg-orange-600 hover:scale-105">
               <span className="relative z-10">Admin</span>
               <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
-            </a>
-      </footer>
+        </a>
+     
     </div>
   );
 };

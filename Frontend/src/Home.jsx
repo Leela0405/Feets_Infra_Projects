@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
+import Animated from './components/AnimatedParticles'
+import Floating from './components/FloatIcon';
+import Footer from './components/footer';
+import NavigationAuto from './components/Nav';
+import Mouse from './components/Mouse';
 
 const ConstructionHomepage = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -20,156 +25,20 @@ const ConstructionHomepage = () => {
     };
   }, []);
 
-  // Component for animated background particles
-  const Particle = ({ delay, size, x, y }) => (
-    <div
-      className="absolute rounded-full bg-orange-500 opacity-20"
-      style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        left: `${x}%`,
-        top: `${y}%`,
-        animationDelay: `${delay}s`,
-      }}
-    >
-      {/* Inline style for particle float animation */}
-      <style jsx>{`
-        div {
-          animation: float 2s ease-in-out infinite;
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.2; }
-          50% { transform: translateY(-100px) rotate(180deg); opacity: 0.6; }
-        }
-      `}</style>
-    </div>
-  );
-
-  // Component for floating construction-themed icons
-  const FloatingIcon = ({ icon, delay, x, y }) => (
-    <div
-      className="absolute text-4xl text-orange-500 opacity-10"
-      style={{
-        left: `${x}%`,
-        top: `${y}%`,
-        animationDelay: `${delay}s`,
-      }}
-    >
-      {/* Inline style for icon float animation - removed scale effect */}
-      <style jsx>{`
-        div {
-          animation: iconFloat 100s ease-in-out infinite;
-        }
-        @keyframes iconFloat {
-          0%, 100% { transform: translateY(0); } /* Removed scale(1) */
-          50% { transform: translateY(-50px); } /* Removed scale(1.2) */
-        }
-      `}</style>
-      {icon}
-    </div>
-  );
-
   return (
     <>
-      {/* Global styles to reset default browser margins/padding and ensure full page height */}
-      <style jsx global>{`
-        * {
-          margin: 0;
-          padding: 0;
-          box-sizing: border-box;
-        }
-        
-        html, body {
-          margin: 0;
-          padding: 0;
-          width: 100%;
-          height: 100%;
-          overflow-x: hidden; /* Prevent horizontal scrolling */
-        }
-        
-        #root {
-          margin: 0;
-          padding: 0;
-          width: 100%;
-          min-height: 100%;
-        }
-      `}</style>
-
       {/* Main container for the homepage, covering the full viewport */}
       <div className="w-full h-screen bg-black text-white overflow-hidden relative">
         {/* Dynamic background with mouse follow effect */}
         {/* This div is fixed and covers the entire screen, appearing behind other content */}
-        <div 
-          className="fixed inset-0 opacity-30 transition-all duration-1000"
-          style={{
-            background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(255, 107, 53, 0.1), transparent 40%)`,
-          }}
-        />
+       <Mouse/>
 
-        {/* Animated particles layer, fixed and behind main content */}
-        <div className="fixed inset-0 overflow-hidden">
-          {[...Array(15)].map((_, i) => (
-            <Particle
-              key={i}
-              delay={i * 0.5}
-              size={Math.random() * 20 + 10}
-              x={Math.random() * 100}
-              y={Math.random() * 100}
-            />
-          ))}
-        </div>
+       
+          <Animated/>
 
-        {/* Floating construction icons layer, fixed and behind main content */}
-        <div className="fixed inset-0 overflow-hidden">
-          <FloatingIcon icon="🏗️" delay={0} x={10} y={20} />
-          <FloatingIcon icon="🏢" delay={2} x={85} y={15} />
-          <FloatingIcon icon="⚒️" delay={4} x={15} y={70} />
-          <FloatingIcon icon="🏭" delay={6} x={80} y={75} />
-          <FloatingIcon icon="🔧" delay={1} x={50} y={10} />
-          <FloatingIcon icon="⛑️" delay={3} x={90} y={50} />
-        </div>
+         <Floating/>
 
-        {/* Navigation Bar */}
-        {/* This nav element is fixed at the top, spans full width, and has a high z-index */}
-        <nav className="fixed top-0 w-full z-50 bg-black bg-opacity-95 backdrop-blur-lg border-b border-gray-800/50">
-          <div className="w-full px-6 py-4">
-            <div className="flex justify-between items-center max-w-7xl mx-auto">
-              {/* Logo/Brand Name */}
-              <div className="text-3xl font-bold tracking-wider cursor-pointer">
-                <span className="text-white">FEET INFRA</span>
-                <span className="text-orange-500">Project</span>
-              </div>
-              {/* Desktop Navigation Links */}
-              <div className="hidden md:flex space-x-8">
-                {['Home', 'About', 'Projects', 'Contact'].map((item, index) => (
-                  <a
-                    key={item}
-                    href={`/${item.toLowerCase()}`}
-                    className={`relative group transition-colors duration-300 font-medium cursor-pointer ${
-                      item === 'Home' ? 'text-white-500' : 'text-white hover:text-orange-500'
-                    }`}
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    {item}
-                    {/* Underline effect on hover */}
-                    <span className={`absolute bottom-0 left-0 h-0.5 bg-orange-500 transition-all duration-300 ${
-                      item === 'Home' ? 'w-full' : 'w-0 group-hover:w-full'
-                    }`} />
-                  </a>
-                ))}
-              </div>
-              
-              {/* Mobile menu button (hamburger icon) */}
-              <div className="md:hidden">
-                <button className="text-white hover:text-orange-500 transition-colors duration-300">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                </button>
-              </div>
-            </div>
-          </div>
-        </nav>
+        <NavigationAuto/>
 
         {/* Hero Section - Full screen content */}
         <section className="relative w-full h-full flex items-center justify-center overflow-hidden">
@@ -259,62 +128,12 @@ const ConstructionHomepage = () => {
               <div className="w-1 h-3 bg-white rounded-full mt-2 animate-pulse" />
             </div>
           </div>
+
         </section>
 
-        {/* Custom CSS animations and scrollbar styling */}
-        <style jsx>{`
-          /* Keyframe animation for sliding up elements */
-          @keyframes slide-up {
-            from {
-              opacity: 0;
-              transform: translateY(100px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-
-          /* Keyframe animation for fading in elements */
-          @keyframes fade-in {
-            from {
-              opacity: 0;
-              transform: translateY(30px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-
-          /* Apply slide-up animation */
-          .animate-slide-up {
-            animation: slide-up 1s cubic-bezier(0.4, 0, 0.2, 1) both;
-          }
-
-          /* Apply fade-in animation */
-          .animate-fade-in {
-            animation: fade-in 1s cubic-bezier(0.4, 0, 0.2, 1) both;
-          }
-
-          /* Custom scrollbar styling for a consistent look */
-          ::-webkit-scrollbar {
-            width: 8px; /* Width of the scrollbar */
-          }
-
-          ::-webkit-scrollbar-track {
-            background: #000; /* Background of the scrollbar track */
-          }
-
-          ::-webkit-scrollbar-thumb {
-            background: #ff6b35; /* Color of the scrollbar thumb */
-            border-radius: 4px; /* Rounded corners for the thumb */
-          }
-
-          ::-webkit-scrollbar-thumb:hover {
-            background: #ff8c42; /* Color of the scrollbar thumb on hover */
-          }
-        `}</style>
+     
+        <Footer/>
+       
       </div>
     </>
   );
