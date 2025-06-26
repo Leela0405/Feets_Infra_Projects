@@ -79,7 +79,7 @@ router.post('/login', loginLimiter, asyncHandler(async (req, res) => {
   const token = jwt.sign(
     { id: admin.id, username: admin.username, role: admin.role },
     JWT_SECRET,
-    { expiresIn: '24h' }
+    { expiresIn: '10min' }
   );
 
   res.json({

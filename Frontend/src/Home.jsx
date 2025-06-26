@@ -7,37 +7,55 @@ import NavigationAuto from './components/Nav';
 import Mouse from './components/Mouse';
 
 const ConstructionHomepage = () => {
-  const [scrollY, setScrollY] = useState(0);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
   return (
     <>
-      {/* Main container for the homepage, covering the full viewport */}
+    <style jsx>{`
+        @keyframes slideUp {
+          from {
+            transform: translateY(100%);
+            opacity: 0;
+          }
+          to {
+            transform: translateY(0);
+            opacity: 1;
+          }
+        }
+        
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        @keyframes float {
+          0%, 100% {
+            transform: translateY(0px) rotate(0deg);
+          }
+          50% {
+            transform: translateY(-20px) rotate(180deg);
+          }
+        }
+        
+        .animate-slide-up {
+          animation: slideUp 0.6s ease-out forwards;
+          opacity: 0;
+        }
+        
+        .animate-fade-in {
+          animation: fadeIn 0.8s ease-out forwards;
+          opacity: 0;
+        }
+      `}</style>
       <div className="w-full h-screen bg-black text-white overflow-hidden relative">
-        {/* Dynamic background with mouse follow effect */}
-        {/* This div is fixed and covers the entire screen, appearing behind other content */}
-       <Mouse/>
-
-       
+      
+          <Mouse/>
           <Animated/>
-
-         <Floating/>
-
+          <Floating/>
         <NavigationAuto/>
 
         {/* Hero Section - Full screen content */}
@@ -131,7 +149,6 @@ const ConstructionHomepage = () => {
 
         </section>
 
-     
         <Footer/>
        
       </div>

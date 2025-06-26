@@ -6,25 +6,6 @@ import Animated from './components/AnimatedParticles';
 import Mouse from './components/Mouse';
 
 const AboutUsPage = () => {
-  const [scrollY, setScrollY] = useState(0);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
-
   const teamMembers = [
     {
       name: "Leela Akshith",
@@ -79,7 +60,7 @@ const AboutUsPage = () => {
     <div className="w-screen min-h-screen bg-black text-white overflow-x-hidden relative">
 
 
-      <Mouse/>
+      <Mouse/>    
       <Animated/>
      <FloatingIcon/>
   `   <Navigation/>
