@@ -1,5 +1,5 @@
 
-# FeetInfraProjects 👣
+# FeetInfraProjects 
 
 A collection of infrastructure automation and web projects centered around the “Feet” concept.
 
